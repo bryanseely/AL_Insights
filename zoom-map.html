@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>AL Insights Experience Map</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+
+    <style>
+        #image-map {
+            width: 100%;
+            height: 711px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Wrapper -->
+    <div id="wrapper" class="lightgray">
+
+        <!-- Header -->
+        <header id="header">
+            <a href="index.html" class="logo"><strong>Point B</strong> <span>Project Athena</span></a>
+            <nav>
+                <a href="#menu">Menu</a>
+            </nav>
+        </header>
+
+        <!-- Menu -->
+        <nav id="menu">
+            <ul class="links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="journey.html">Experience Map</a></li>
+                <li><a href="sipoc.html">SIPOC</a></li>
+                <li><a href="#.html">Vignettes</a></li>
+                <li><a href="quotes.html">Quote Digest</a></li>
+                <li><a href="Treemap.html">Treemap</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main -->
+        <div id="main" class="alt">
+
+            <!-- One -->
+            <section id="one">
+                <div class="inner">
+            <section>
+                <div class="inner">
+                    <div id="image-map" class="image fit"></div>
+                </div>
+            </section>
+                </div>
+            </section>
+        </div>
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="inner">
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script>
+        // Using leaflet.js to pan and zoom a big image.
+        // See also: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html
+        // create the slippy map
+        var map = L.map('image-map', {
+            minZoom: 3,
+            maxZoom: 4,
+            center: [0, 0],
+            zoom: 3,
+            crs: L.CRS.Simple
+        });
+        // dimensions of the image
+        var w = 1213,
+            h = 711,
+            url = 'images/AL%20Experience%20Map%20draft@2x.png';
+        // calculate the edges of the image, in coordinate space
+        var southWest = map.unproject([0, h], map.getMaxZoom() - 1);
+        var northEast = map.unproject([w, 0], map.getMaxZoom() - 1);
+        var bounds = new L.LatLngBounds(southWest, northEast);
+        // add the image overlay, 
+        // so that it covers the entire map
+        L.imageOverlay(url, bounds).addTo(map);
+        // tell leaflet that the map is exactly as big as the image
+        map.setMaxBounds(bounds);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>AL Insights Treemap</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+</head>
+
+<body>
+
+    <!-- Wrapper -->
+    <div id="wrapper" class="eggshell">
+
+        <!-- Header -->
+        <header id="header">
+            <a href="index.html" class="logo"><strong>Point B</strong> <span>Project Athena</span></a>
+            <nav>
+                <a href="#menu">Menu</a>
+            </nav>
+        </header>
+
+        <!-- Menu -->
+        <nav id="menu">
+            <ul class="links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#.html">Journey Map</a></li>
+                <li><a href="sipoc.html">SIPOC</a></li>
+                <li><a href="#.html">Vignettes</a></li>
+                <li><a href="quotes.html">Quote Digest</a></li>
+                <li><a href="Wordcloud.html">Word Cloud</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main -->
+        <div id="main" class="alt">
+
+            <!-- One -->
+            <section id="one">
+                <div class="inner">
+                    <header class="major" id="dark">
+                        <h1>AL Insights Treemap</h1>
+                    </header>
+                    <div id="chart_div" style="width: 1200px; height: 600px;"></div>
+                    <br>
+                    <img src="images/legend.png" />
+                </div>
+            </section>
+        </div>
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="inner">
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {
+        'packages': ['treemap']
+    });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/17Zw8gZXAUNMT77nqfQMjo278hiIOb2HqmmIvkfAvycc/edit?usp=sharing');
+        query.send(handleQueryResponse);
+    }
+
+    function handleQueryResponse(response) {
+        var data = response.getDataTable();
+
+        tree = new google.visualization.TreeMap(document.getElementById('chart_div'));
+
+        tree.draw(data, {
+            minColor: '#243747',
+            midColor: '#38a3a5',
+            maxColor: '#d8834e',
+            maxDepth: 1,
+            headerColor: '#676767',
+            headerHeight: 35,
+            fontColor: '#f5f1ed',
+            showScale: false,
+            generateTooltip: showStaticTooltip
+        });
+
+        function showStaticTooltip(row, size, value) {
+            return '<div style="background:#dad2bc; padding:10px; color:#252323; border-style:solid">' +
+                data.getValue(row, 0);
+        }
+
+    }
+</script>
+
+</body>
+
+</html>
